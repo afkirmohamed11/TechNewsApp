@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
                   href="https://www.mit.edu" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fas fa-university mr-2"></i>
                   MIT Technology Review
@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
                   href="https://www.techcrunch.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fas fa-newspaper mr-2"></i>
                   TechCrunch
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
                   href="https://www.openai.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fas fa-robot mr-2"></i>
                   OpenAI
@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
                   href="https://www.stanford.edu" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fas fa-graduation-cap mr-2"></i>
                   Stanford Tech Initiative
@@ -69,13 +69,13 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold mb-4">Connect With Us</h3>
             <ul className="space-y-3">
               <li>
-                <a href="mailto:contact@technews.com" className="text-gray-400 hover:text-white transition flex items-center">
+                <a href="mailto:contact@technews.com" className="text-gray-400 hover:text-blue-600 transition flex items-center">
                   <i className="fas fa-envelope mr-2"></i>
                   contact@technews.com
                 </a>
               </li>
               <li>
-                <a href="tel:+15551234567" className="text-gray-400 hover:text-white transition flex items-center">
+                <a href="tel:+15551234567" className="text-gray-400 hover:text-blue-600 transition flex items-center">
                   <i className="fas fa-phone mr-2"></i>
                   +212 (555) 123-4567
                 </a>
@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
                   href="https://www.linkedin.com/company/technews" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fab fa-linkedin mr-2"></i>
                   LinkedIn
@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
                   href="https://twitter.com/technews" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fab fa-x-twitter mr-2"></i>
                   X (Twitter)
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
                   href="https://facebook.com/technews" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fab fa-facebook mr-2"></i>
                   Facebook
@@ -125,7 +125,7 @@ const Footer: React.FC = () => {
                   href="https://github.com/explore" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fab fa-github mr-2"></i>
                   GitHub Explore
@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
                   href="https://stackoverflow.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fab fa-stack-overflow mr-2"></i>
                   Stack Overflow
@@ -147,7 +147,7 @@ const Footer: React.FC = () => {
                   href="https://www.coursera.org/browse/computer-science" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fas fa-graduation-cap mr-2"></i>
                   Coursera Tech
@@ -158,7 +158,7 @@ const Footer: React.FC = () => {
                   href="https://dev.to" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fab fa-dev mr-2"></i>
                   DEV Community
@@ -169,7 +169,7 @@ const Footer: React.FC = () => {
                   href="https://www.kaggle.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition flex items-center"
+                  className="text-gray-400 hover:text-blue-600 transition flex items-center"
                 >
                   <i className="fas fa-chart-line mr-2"></i>
                   Kaggle
@@ -186,15 +186,15 @@ const Footer: React.FC = () => {
               {new Date().getFullYear()} TechNews. All rights reserved.
             </div>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-white transition">
+              <a href="#" className="text-gray-400 hover:text-blue-600 transition">
                 <span className="sr-only">Twitter</span>
                 <i className="fab fa-twitter text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
+              <a href="#" className="text-gray-400 hover:text-blue-600 transition">
                 <span className="sr-only">LinkedIn</span>
                 <i className="fab fa-linkedin text-xl"></i>
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
+              <a href="#" className="text-gray-400 hover:text-blue-600 transition">
                 <span className="sr-only">GitHub</span>
                 <i className="fab fa-github text-xl"></i>
               </a>
