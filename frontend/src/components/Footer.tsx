@@ -67,49 +67,53 @@ const Footer: React.FC = () => {
           {/* Contact Us & Social Media */}
           <div className="col-span-1">
             <h3 className="font-semibold mb-4">Connect With Us</h3>
-            <div className="space-y-2">
-              <div>
-                <i className="fas fa-envelope text-gray-400 w-6"></i>
-                <a href="mailto:contact@technews.com" className="text-gray-400 hover:text-white transition">contact@technews.com</a>
-              </div>
-              <div>
-                <i className="fas fa-phone text-gray-400 w-6"></i>
-                <a href="tel:+15551234567" className="text-gray-400 hover:text-white transition">+212 (555) 123-4567</a>
-              </div>
-              <div>
+            <ul className="space-y-3">
+              <li>
+                <a href="mailto:contact@technews.com" className="text-gray-400 hover:text-white transition flex items-center">
+                  <i className="fas fa-envelope mr-2"></i>
+                  contact@technews.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+15551234567" className="text-gray-400 hover:text-white transition flex items-center">
+                  <i className="fas fa-phone mr-2"></i>
+                  +212 (555) 123-4567
+                </a>
+              </li>
+              <li>
                 <a 
                   href="https://www.linkedin.com/company/technews" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-gray-400 hover:text-white transition flex items-center"
                 >
-                  <i className="fab fa-linkedin text-xl w-6"></i>
-                  <span>LinkedIn</span>
+                  <i className="fab fa-linkedin mr-2"></i>
+                  LinkedIn
                 </a>
-              </div>
-              <div className="flex items-center space-x-3">
+              </li>
+              <li>
                 <a 
                   href="https://twitter.com/technews" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-gray-400 hover:text-white transition flex items-center"
                 >
-                  <i className="fab fa-x-twitter text-xl w-6"></i>
-                  <span>X (Twitter)</span>
+                  <i className="fab fa-x-twitter mr-2"></i>
+                  X (Twitter)
                 </a>
-              </div>
-              <div className="flex items-center space-x-3">
+              </li>
+              <li>
                 <a 
                   href="https://facebook.com/technews" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-gray-400 hover:text-white transition flex items-center"
                 >
-                  <i className="fab fa-facebook text-xl w-6"></i>
-                  <span>Facebook</span>
+                  <i className="fab fa-facebook mr-2"></i>
+                  Facebook
                 </a>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
           {/* Newsletter */}
