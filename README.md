@@ -1,4 +1,4 @@
-# TechNews Articles Web App
+# Tech News Articles Platform
 
 A modern, full-stack web application for managing and displaying technical articles with dynamic filtering and sorting capabilities. Built with React, TypeScript, FastAPI, and MySQL.
 
