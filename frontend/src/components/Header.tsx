@@ -1,16 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
+import { Search, Moon, Sun, Globe, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
   onCategorySelect: (category: string) => void;
   onHomeClick: () => void;
+  onSearch?: (query: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick }) => {
+const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [language, setLanguage] = useState('en');
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number>();
+
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'fr', name: 'Français' },
+    { code: 'es', name: 'Español' },
+  ];
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -22,12 +35,22 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick }) => {
       }
     };
     fetchCategories();
+
+    // Load dark mode preference from localStorage
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(darkMode);
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    }
   }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+      }
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangMenuOpen(false);
       }
     };
 
@@ -50,11 +73,32 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick }) => {
   const handleMouseLeave = () => {
     timeoutRef.current = window.setTimeout(() => {
       setIsOpen(false);
-    }, 300); // Small delay before closing to make it feel smoother
+    }, 300);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(searchQuery);
+    }
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('darkMode', (!isDarkMode).toString());
+  };
+
+  const handleLanguageChange = (langCode: string) => {
+    setLanguage(langCode);
+    setIsLangMenuOpen(false);
+    // Here you would typically handle language change in your app
+    // For now, we'll just store it in localStorage
+    localStorage.setItem('language', langCode);
   };
 
   return (
-    <header className="bg-blue-600 shadow-lg">
+    <header className="bg-blue-600 dark:bg-gray-800 shadow-lg">
       <style>
         {`
           .custom-scrollbar::-webkit-scrollbar {
@@ -86,68 +130,140 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick }) => {
         `}
       </style>
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           <h1 
             onClick={onHomeClick}
-            className="text-2xl font-bold text-white cursor-pointer hover:text-blue-100 transition-colors duration-200"
+            className="text-2xl font-bold text-white cursor-pointer hover:text-blue-100 transition-colors duration-200 whitespace-nowrap"
           >
             Tech News Platform
           </h1>
-          <div 
-            className="relative" 
-            ref={dropdownRef}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 px-4 py-2 text-white hover:bg-blue-700 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-            >
-              Categories
-              <svg
-                className={`w-5 h-5 transition-transform duration-200 ${
-                  isOpen ? 'transform rotate-180' : ''
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
 
-            {isOpen && (
-              <div 
-                className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl z-50 dropdown-content"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+          {/* Search Bar */}
+          <div className="flex-1 max-w-xl">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  if (onSearch) {
+                    onSearch(e.target.value);
+                  }
+                }}
+                placeholder="Search articles..."
+                className="w-full px-4 py-2 pl-10 pr-4 rounded-full border border-blue-400 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/90 dark:bg-gray-700 dark:text-white"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            {/* Categories Dropdown */}
+            <div 
+              className="relative" 
+              ref={dropdownRef}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="px-4 py-2 text-white hover:bg-blue-700 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               >
-                <div className="py-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
-                  {categories.map((category, index) => (
+                Categories
+                <svg
+                  className={`inline-block w-4 h-4 ml-2 transition-transform duration-200 ${
+                    isOpen ? 'transform rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              {isOpen && (
+                <div 
+                  className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl z-50 dropdown-content"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <div className="py-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                    {categories.map((category, index) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          onCategorySelect(category);
+                          setIsOpen(false);
+                        }}
+                        className={`w-full text-left px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 flex items-center gap-3
+                          ${index !== categories.length - 1 ? 'border-b border-gray-100 dark:border-gray-700' : ''}
+                          ${index === 0 ? 'rounded-t-xl' : ''}
+                          ${index === categories.length - 1 ? 'rounded-b-xl' : ''}
+                        `}
+                      >
+                        <span className="w-2 h-2 rounded-full bg-blue-600 opacity-0 transition-opacity duration-200 transform scale-0 group-hover:opacity-100 group-hover:scale-100"></span>
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Language Selector */}
+            <div className="relative" ref={langDropdownRef}>
+              <button
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                className="flex items-center gap-2 px-4 py-2 text-white hover:bg-blue-600/50 rounded-lg transition-colors"
+                onMouseEnter={() => setIsLangMenuOpen(true)}
+                onMouseLeave={() => setIsLangMenuOpen(false)}
+              >
+                <Globe className="w-5 h-5" />
+                <span>{languages.find(lang => lang.code === language)?.name}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${isLangMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isLangMenuOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 z-50"
+                  onMouseEnter={() => setIsLangMenuOpen(true)}
+                  onMouseLeave={() => setIsLangMenuOpen(false)}
+                >
+                  {languages.map((lang) => (
                     <button
-                      key={category}
-                      onClick={() => {
-                        onCategorySelect(category);
-                        setIsOpen(false);
-                      }}
-                      className={`w-full text-left px-6 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-150 flex items-center gap-3
-                        ${index !== categories.length - 1 ? 'border-b border-gray-100' : ''}
-                        ${index === 0 ? 'rounded-t-xl' : ''}
-                        ${index === categories.length - 1 ? 'rounded-b-xl' : ''}
-                      `}
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+                        language === lang.code 
+                          ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30' 
+                          : 'text-gray-700 dark:text-gray-200'
+                      }`}
                     >
-                      <span className="w-2 h-2 rounded-full bg-blue-600 opacity-0 transition-opacity duration-200 transform scale-0 group-hover:opacity-100 group-hover:scale-100"></span>
-                      {category}
+                      {lang.name}
                     </button>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 text-white hover:bg-blue-700 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+              title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDarkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
           </div>
         </div>
       </div>

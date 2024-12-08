@@ -1,3 +1,4 @@
 myenv
 .env
 helpers/commands.txt
+__pycache__

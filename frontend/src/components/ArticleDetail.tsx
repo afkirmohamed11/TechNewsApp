@@ -31,45 +31,57 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Articles
-      </button>
-      
-      <article>
-        <h1 className="text-4xl font-bold mb-4">{article.Title}</h1>
-        <div className="flex items-center gap-4 mb-6">
-          <button
-            onClick={() => onCategoryClick(article.Category)}
-            className="text-blue-600 bg-blue-50 px-3 py-1 rounded-full hover:bg-blue-100 transition-colors"
-          >
-            {article.Category}
-          </button>
-          <span className="text-gray-500">
-            {new Date(article.Date_of_publication).toLocaleDateString()}
-          </span>
-        </div>
-        
-        <div className="relative h-[400px] mb-8">
+    <div className="max-w-4xl mx-auto">
+      <div className="mb-8">
+        <button
+          onClick={onBack}
+          className="flex items-center text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Back to Articles
+        </button>
+      </div>
+
+      <article className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+        <div className="relative h-96">
           <img
             src={getImageUrl(article.imagePath)}
             alt={article.Title}
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-full object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = '/placeholder-image.jpg';
             }}
           />
         </div>
-        
-        <div className="prose max-w-none">
-          <p className="text-lg text-gray-600 leading-relaxed">
-            {article.Content}
-          </p>
+
+        <div className="p-8">
+          <div className="flex items-center gap-4 mb-6">
+            <button
+              onClick={() => onCategoryClick(article.Category)}
+              className="px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+            >
+              {article.Category}
+            </button>
+            <time className="text-gray-500 dark:text-gray-400 text-sm">
+              {new Date(article.Date_of_publication).toLocaleDateString()}
+            </time>
+          </div>
+
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            {article.Title}
+          </h1>
+
+          <div className="prose dark:prose-invert max-w-none">
+            <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
+              {article.Description}
+            </p>
+            <div className="space-y-6 text-gray-700 dark:text-gray-200">
+              {article.Content.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
         </div>
       </article>
     </div>

@@ -26,7 +26,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, onClick }) => {
 
   return (
     <article 
-      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform hover:scale-[1.02]"
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform hover:scale-[1.02]"
       onClick={onClick}
     >
       <div className="relative h-48">
@@ -42,15 +42,15 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article, onClick }) => {
       </div>
       <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+          <span className="text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded-full">
             {article.Category}
           </span>
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
             {new Date(article.Date_of_publication).toLocaleDateString()}
           </span>
         </div>
-        <h2 className="text-xl font-semibold mb-2">{article.Title}</h2>
-        <p className="text-gray-600">{article.Description}</p>
+        <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{article.Title}</h2>
+        <p className="text-gray-600 dark:text-gray-300">{article.Description}</p>
       </div>
     </article>
   );

@@ -1,4 +1,3 @@
-import os
 import shutil
 from pathlib import Path
 
@@ -17,6 +16,8 @@ def copy_images():
         for image_file in frontend_images_dir.glob('*.jpg'):
             shutil.copy2(image_file, backend_images_dir / image_file.name)
         for image_file in frontend_images_dir.glob('*.png'):
+            shutil.copy2(image_file, backend_images_dir / image_file.name)
+        for image_file in frontend_images_dir.glob('*.jpeg'):
             shutil.copy2(image_file, backend_images_dir / image_file.name)
         print("Images copied successfully!")
     else:
