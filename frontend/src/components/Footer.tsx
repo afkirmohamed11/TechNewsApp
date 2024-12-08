@@ -116,23 +116,66 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Tech Resources */}
           <div className="col-span-1">
-            <h3 className="font-semibold mb-4">Stay Updated</h3>
-            <p className="text-gray-400">Subscribe to our newsletter for the latest tech updates.</p>
-            <form className="space-y-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-              >
-                Subscribe
-              </button>
-            </form>
+            <h3 className="font-semibold mb-4">Tech Resources</h3>
+            <ul className="space-y-3">
+              <li>
+                <a 
+                  href="https://github.com/explore" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition flex items-center"
+                >
+                  <i className="fab fa-github mr-2"></i>
+                  GitHub Explore
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://stackoverflow.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition flex items-center"
+                >
+                  <i className="fab fa-stack-overflow mr-2"></i>
+                  Stack Overflow
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://www.coursera.org/browse/computer-science" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition flex items-center"
+                >
+                  <i className="fas fa-graduation-cap mr-2"></i>
+                  Coursera Tech
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://dev.to" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition flex items-center"
+                >
+                  <i className="fab fa-dev mr-2"></i>
+                  DEV Community
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://www.kaggle.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-gray-400 hover:text-white transition flex items-center"
+                >
+                  <i className="fas fa-chart-line mr-2"></i>
+                  Kaggle
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
