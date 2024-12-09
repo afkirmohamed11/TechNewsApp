@@ -7,7 +7,6 @@ import Footer from './components/Footer';
 import { Article, ArticleDetail as ArticleDetailType } from './types/article';
 import { api } from './services/api';
 import debounce from 'lodash/debounce';
-import { FileDown, Home, ArrowLeft } from 'lucide-react';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
