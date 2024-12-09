@@ -11,7 +11,6 @@ import debounce from 'lodash/debounce';
 function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedArticle, setSelectedArticle] = useState<ArticleDetailType | null>(null);
-  const [viewType, setViewType] = useState<'latest' | 'popular' | null>(null);
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -63,7 +62,7 @@ function App() {
 
   useEffect(() => {
     fetchArticles();
-  }, [selectedCategory, viewType]);
+  }, [selectedCategory]);
 
   useEffect(() => {
     debouncedSearch(searchTerm, articles);
@@ -79,31 +78,8 @@ function App() {
       
       if (selectedCategory === 'All') {
         fetchedArticles = await api.getAllArticles();
-        
-        if (viewType === 'latest') {
-          fetchedArticles = fetchedArticles
-            .filter(article => article.Latest)
-            .sort((a, b) => 
-              new Date(b.Date_of_publication).getTime() - new Date(a.Date_of_publication).getTime()
-            );
-        } else if (viewType === 'popular') {
-          fetchedArticles = fetchedArticles
-            .filter(article => !article.Latest)
-            .sort((a, b) => 
-              new Date(b.Date_of_publication).getTime() - new Date(a.Date_of_publication).getTime()
-            );
-        }
       } else {
-        if (viewType === null) {
-          // When no filter is selected, get all articles for the category
-          fetchedArticles = await api.getArticlesByCategory(selectedCategory);
-        } else {
-          // When a filter is selected, get filtered articles
-          fetchedArticles = await api.getArticlesByCategoryAndSort(
-            selectedCategory,
-            viewType === 'latest'
-          );
-        }
+        fetchedArticles = await api.getArticlesByCategory(selectedCategory);
       }
       
       setArticles(fetchedArticles);
@@ -190,8 +166,6 @@ function App() {
         ) : (
           <>
             <ArticleFilters
-              viewType={viewType}
-              setViewType={setViewType}
               selectedCategory={selectedCategory}
               onCategorySelect={handleCategoryClick}
               language={language}
