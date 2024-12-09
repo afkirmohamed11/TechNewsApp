@@ -1,6 +1,6 @@
 # Tech News Articles Platform
 
-A modern, full-stack web application for managing and displaying technical articles with dynamic filtering and sorting capabilities. Built with React, TypeScript, FastAPI, and MySQL.
+A modern, full-stack web application for managing and displaying technical articles with dynamic filtering capabilities. Built with React, TypeScript, FastAPI, and MySQL.
 
 ![Tech News Platform](frontend/public/technews.jpg)
 
@@ -8,7 +8,6 @@ A modern, full-stack web application for managing and displaying technical artic
 
 - **Dynamic Article Management**
   - Filter articles by categories
-  - Sort by Latest/Popular
   - Detailed article view
   - Real-time category filtering
 
@@ -103,8 +102,7 @@ npm run dev
 
 1. Access the application at `http://localhost:5173`
 2. Browse articles by category using the top navigation
-3. Toggle between Latest and Popular views
-4. Click on articles to view details
+3. Click on articles to view details
 
 ## 📁 Project Structure
 
@@ -131,7 +129,6 @@ project/
 - `GET /articles` - Get all articles
 - `GET /articles/categories` - Get unique categories
 - `GET /articles/category` - Filter articles by category
-- `GET /articles/category-latest-popular` - Sort articles
 - `GET /articles/detail` - Get article details
 
 ## 🤝 Contributing

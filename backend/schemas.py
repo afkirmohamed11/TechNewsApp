@@ -7,7 +7,6 @@ class Article(BaseModel):
     imagePath: str | None
     Date_of_publication: date
     Description: str | None
-    Latest: bool
 
 
 class ArticleDetail(Article):
