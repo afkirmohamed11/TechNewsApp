@@ -4,15 +4,18 @@ import { api } from '../services/api';
 const translations = {
   en: {
     latest: "Latest",
-    popular: "Popular"
+    popular: "Popular",
+    all: "All"
   },
   fr: {
-    latest: "Récents",
-    popular: "Populaires"
+    latest: "Récent",
+    popular: "Populaire",
+    all: "Tout"
   },
   es: {
-    latest: "Últimos",
-    popular: "Populares"
+    latest: "Reciente",
+    popular: "Popular",
+    all: "Todo"
   }
 };
 
@@ -52,12 +55,18 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
     setViewType(viewType === type ? null : type);
   };
 
+  const getCategoryDisplayName = (category: string) => {
+    return category === 'All' 
+      ? translations[language as keyof typeof translations]?.all || translations.en.all
+      : category;
+  };
+
   return (
     <div className="mb-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div className="flex flex-col gap-2">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-            {selectedCategory === 'All' ? 'All Articles' : selectedCategory}
+            {getCategoryDisplayName(selectedCategory)}
           </h2>
         </div>
         <div className="flex gap-4">
@@ -101,7 +110,7 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
                   : 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
-              {category}
+              {getCategoryDisplayName(category)}
             </button>
           ))
         )}

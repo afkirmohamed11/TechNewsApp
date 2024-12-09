@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import { Article, ArticleDetail as ArticleDetailType } from './types/article';
 import { api } from './services/api';
 import debounce from 'lodash/debounce';
-import { FileDown, Home } from 'lucide-react';
+import { FileDown, Home, ArrowLeft } from 'lucide-react';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -17,7 +17,31 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-  const [language, setLanguage] = useState('en'); // Add this line
+  const [language, setLanguage] = useState('en');
+
+  const translations = {
+    en: {
+      noArticlesTitle: "No Articles Found",
+      noArticlesCategory: "We couldn't find any {category} articles. Try a different category or view type!",
+      noArticlesSearch: "We couldn't find any articles matching \"{term}\". Try a different search term!",
+      backToHome: "Back to Home",
+      backToArticles: "Back to Articles"
+    },
+    fr: {
+      noArticlesTitle: "Aucun Article Trouvé",
+      noArticlesCategory: "Nous n'avons trouvé aucun article dans la catégorie {category}. Essayez une autre catégorie ou un autre type de vue !",
+      noArticlesSearch: "Nous n'avons trouvé aucun article correspondant à \"{term}\". Essayez un autre terme de recherche !",
+      backToHome: "Retour à l'Accueil",
+      backToArticles: "Retour aux Articles"
+    },
+    es: {
+      noArticlesTitle: "No se Encontraron Artículos",
+      noArticlesCategory: "No pudimos encontrar ningún artículo de {category}. ¡Prueba una categoría diferente o un tipo de vista diferente!",
+      noArticlesSearch: "No pudimos encontrar ningún artículo que coincida con \"{term}\". ¡Intenta con otro término de búsqueda!",
+      backToHome: "Volver al Inicio",
+      backToArticles: "Volver a los Artículos"
+    }
+  };
 
   // Debounced search function
   const debouncedSearch = useCallback(
@@ -115,25 +139,28 @@ function App() {
     setSearchTerm(term);
   };
 
-  const NoArticlesMessage = ({ searchTerm }: { searchTerm: string }) => (
+  const handleLanguageChange = (lang: string) => {
+    setLanguage(lang);
+  };
+
+  const NoArticlesMessage = ({ searchTerm, category }: { searchTerm?: string, category?: string }) => (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
       <div className="mb-6">
-        <FileDown className="w-16 h-16 text-gray-400 dark:text-gray-500" />
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          {translations[language as keyof typeof translations]?.noArticlesTitle || translations.en.noArticlesTitle}
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400">
+          {searchTerm 
+            ? (translations[language as keyof typeof translations]?.noArticlesSearch || translations.en.noArticlesSearch).replace('{term}', searchTerm)
+            : (translations[language as keyof typeof translations]?.noArticlesCategory || translations.en.noArticlesCategory).replace('{category}', category || '')
+          }
+        </p>
       </div>
-      <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-        No Articles Found
-      </h2>
-      <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-md">
-        {searchTerm
-          ? `We couldn't find any articles matching "${searchTerm}". Try a different search term!`
-          : `We couldn't find any ${selectedCategory === 'All' ? 'latest' : selectedCategory} articles. Try a different category or view type!`}
-      </p>
       <button
         onClick={handleHomeClick}
-        className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-colors"
+        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
       >
-        <Home className="w-5 h-5 mr-2" />
-        Back to Home
+        {translations[language as keyof typeof translations]?.backToHome || translations.en.backToHome}
       </button>
     </div>
   );
@@ -144,6 +171,7 @@ function App() {
         onCategorySelect={handleCategoryClick}
         onHomeClick={handleHomeClick}
         onSearch={handleSearch}
+        onLanguageChange={handleLanguageChange}
       />
       
       <main className="container mx-auto px-4 py-8">
@@ -152,6 +180,7 @@ function App() {
             article={selectedArticle}
             onBack={() => setSelectedArticle(null)}
             onCategoryClick={handleCategoryClick}
+            language={language}
           />
         ) : (
           <>
@@ -167,7 +196,7 @@ function App() {
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
               </div>
             ) : filteredArticles.length === 0 ? (
-              <NoArticlesMessage searchTerm={searchTerm} />
+              <NoArticlesMessage searchTerm={searchTerm} category={selectedCategory} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredArticles.map((article) => (
@@ -182,7 +211,7 @@ function App() {
           </>
         )}
       </main>
-      <Footer />
+      <Footer language={language} />
     </div>
   );
 }

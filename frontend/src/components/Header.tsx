@@ -5,25 +5,29 @@ import { Search, Moon, Sun, Globe, ChevronDown } from 'lucide-react';
 const translations = {
   en: {
     search: "Search articles...",
-    categories: "Categories"
+    categories: "Categories",
+    all: "All"
   },
   fr: {
     search: "Rechercher des articles...",
-    categories: "Catégories"
+    categories: "Catégories",
+    all: "Tout"
   },
   es: {
     search: "Buscar artículos...",
-    categories: "Categorías"
+    categories: "Categorías",
+    all: "Todo"
   }
 };
 
 interface HeaderProps {
   onCategorySelect: (category: string) => void;
   onHomeClick: () => void;
-  onSearch?: (query: string) => void;
+  onSearch?: (term: string) => void;
+  onLanguageChange: (lang: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch }) => {
+const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch, onLanguageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -107,9 +111,8 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch
   const handleLanguageChange = (langCode: string) => {
     setLanguage(langCode);
     setIsLangMenuOpen(false);
-    // Here you would typically handle language change in your app
-    // For now, we'll just store it in localStorage
     localStorage.setItem('language', langCode);
+    onLanguageChange(langCode);
   };
 
   return (
@@ -202,7 +205,19 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch
                   onMouseLeave={handleMouseLeave}
                 >
                   <div className="py-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
-                    {categories.map((category, index) => (
+                    <button
+                      onClick={() => {
+                        onCategorySelect('All');
+                        setIsOpen(false);
+                      }}
+                      className={`w-full text-left px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 flex items-center gap-3
+                        rounded-t-xl
+                      `}
+                    >
+                      <span className="w-2 h-2 rounded-full bg-blue-600 opacity-0 transition-opacity duration-200 transform scale-0 group-hover:opacity-100 group-hover:scale-100"></span>
+                      {translations[language as keyof typeof translations]?.all || translations.en.all}
+                    </button>
+                    {categories.slice(1).map((category, index) => (
                       <button
                         key={category}
                         onClick={() => {
@@ -210,9 +225,8 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch
                           setIsOpen(false);
                         }}
                         className={`w-full text-left px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150 flex items-center gap-3
-                          ${index !== categories.length - 1 ? 'border-b border-gray-100 dark:border-gray-700' : ''}
-                          ${index === 0 ? 'rounded-t-xl' : ''}
-                          ${index === categories.length - 1 ? 'rounded-b-xl' : ''}
+                          ${index !== categories.length - 2 ? 'border-b border-gray-100 dark:border-gray-700' : ''}
+                          ${index === categories.length - 2 ? 'rounded-b-xl' : ''}
                         `}
                       >
                         <span className="w-2 h-2 rounded-full bg-blue-600 opacity-0 transition-opacity duration-200 transform scale-0 group-hover:opacity-100 group-hover:scale-100"></span>

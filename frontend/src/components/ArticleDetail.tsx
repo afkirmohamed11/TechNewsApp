@@ -2,16 +2,30 @@ import React from 'react';
 import { ArticleDetail as ArticleDetailType } from '../types/article';
 import { ArrowLeft } from 'lucide-react';
 
+const translations = {
+  en: {
+    backToArticles: "Back to Articles"
+  },
+  fr: {
+    backToArticles: "Retour aux Articles"
+  },
+  es: {
+    backToArticles: "Volver a los Artículos"
+  }
+};
+
 interface ArticleDetailProps {
   article: ArticleDetailType;
   onBack: () => void;
   onCategoryClick: (category: string) => void;
+  language: string;
 }
 
-const ArticleDetail: React.FC<ArticleDetailProps> = ({ 
+const ArticleDetail: React.FC<ArticleDetailProps> = ({
   article, 
   onBack,
-  onCategoryClick 
+  onCategoryClick,
+  language
 }) => {
   const getImageUrl = (imagePath: string | null) => {
     if (!imagePath) return '/placeholder-image.jpg';
@@ -38,7 +52,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({
           className="flex items-center text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
-          Back to Articles
+          {translations[language as keyof typeof translations]?.backToArticles || translations.en.backToArticles}
         </button>
       </div>
 
