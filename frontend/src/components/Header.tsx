@@ -2,6 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 import { Search, Moon, Sun, Globe, ChevronDown } from 'lucide-react';
 
+const translations = {
+  en: {
+    search: "Search articles...",
+    categories: "Categories"
+  },
+  fr: {
+    search: "Rechercher des articles...",
+    categories: "Catégories"
+  },
+  es: {
+    search: "Buscar artículos...",
+    categories: "Categorías"
+  }
+};
+
 interface HeaderProps {
   onCategorySelect: (category: string) => void;
   onHomeClick: () => void;
@@ -139,22 +154,20 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch
           </h1>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-xl">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  if (onSearch) {
-                    onSearch(e.target.value);
-                  }
-                }}
-                placeholder="Search articles..."
-                className="w-full px-4 py-2 pl-10 pr-4 rounded-full border border-blue-400 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/90 dark:bg-gray-700 dark:text-white"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            </div>
+          <div className="relative flex-1 max-w-xl mx-4">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                if (onSearch) {
+                  onSearch(e.target.value);
+                }
+              }}
+              placeholder={translations[language as keyof typeof translations]?.search || translations.en.search}
+              className="w-full px-4 py-2 pl-10 pr-4 rounded-full border border-blue-400 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/90 dark:bg-gray-700 dark:text-white"
+            />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           </div>
 
           <div className="flex items-center gap-4">
@@ -169,7 +182,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch
                 onClick={() => setIsOpen(!isOpen)}
                 className="px-4 py-2 text-white hover:bg-blue-700 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               >
-                Categories
+                {translations[language as keyof typeof translations]?.categories || translations.en.categories}
                 <svg
                   className={`inline-block w-4 h-4 ml-2 transition-transform duration-200 ${
                     isOpen ? 'transform rotate-180' : ''
@@ -178,12 +191,7 @@ const Header: React.FC<HeaderProps> = ({ onCategorySelect, onHomeClick, onSearch
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
 

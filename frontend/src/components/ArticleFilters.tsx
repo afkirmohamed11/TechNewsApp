@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 
+const translations = {
+  en: {
+    latest: "Latest",
+    popular: "Popular"
+  },
+  fr: {
+    latest: "Récents",
+    popular: "Populaires"
+  },
+  es: {
+    latest: "Últimos",
+    popular: "Populares"
+  }
+};
+
 interface ArticleFiltersProps {
   viewType: 'latest' | 'popular' | null;
   setViewType: (type: 'latest' | 'popular' | null) => void;
   selectedCategory: string;
   onCategorySelect: (category: string) => void;
+  language: string;
 }
 
 const ArticleFilters: React.FC<ArticleFiltersProps> = ({
@@ -13,6 +29,7 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
   setViewType,
   selectedCategory,
   onCategorySelect,
+  language
 }) => {
   const [categories, setCategories] = useState<string[]>(['All']);
   const [loading, setLoading] = useState(true);
@@ -52,7 +69,7 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
                 : 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
-            Latest
+            {translations[language as keyof typeof translations]?.latest || translations.en.latest}
           </button>
           <button
             onClick={() => handleViewTypeClick('popular')}
@@ -62,7 +79,7 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
                 : 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
-            Popular
+            {translations[language as keyof typeof translations]?.popular || translations.en.popular}
           </button>
         </div>
       </div>

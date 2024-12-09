@@ -17,6 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [language, setLanguage] = useState('en'); // Add this line
 
   // Debounced search function
   const debouncedSearch = useCallback(
@@ -159,6 +160,7 @@ function App() {
               setViewType={setViewType}
               selectedCategory={selectedCategory}
               onCategorySelect={handleCategoryClick}
+              language={language}
             />
             {loading ? (
               <div className="flex justify-center items-center py-8">
