@@ -7,11 +7,11 @@ pool:
     - agent.name -equals LOKMANE
 
 variables:
-  azureSubscription: 'AzureAppServiceConnection'  # Replace with your Azure service connection name
+  azureSubscription: 'Azureserviceconnection'  # Replace with your Azure service connection name
   frontendImageName: 'azurecontainerregistryconnection.azurecr.io/frontend'
   backendImageName: 'azurecontainerregistryconnection.azurecr.io/backend'
-  frontendAppName: 'your-frontend-app-service'  # Replace with your Azure App Service name for frontend
-  backendAppName: 'your-backend-app-service'  # Replace with your Azure App Service name for backend
+  frontendAppName: 'frontend-app-service'  # Replace with your Azure App Service name for frontend
+  backendAppName: 'backend-app-service'  # Replace with your Azure App Service name for backend
 
 steps:
 # Step 1: Checkout the code from the new repository
