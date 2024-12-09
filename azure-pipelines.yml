@@ -1,0 +1,67 @@
+trigger:
+- main
+
+pool:
+  name: 'Default'
+  demands:
+    - agent.name -equals LOKMANE
+
+variables:
+  azureSubscription: 'AzureAppServiceConnection'  # Replace with your Azure service connection name
+  frontendImageName: 'azurecontainerregistryconnection.azurecr.io/frontend'
+  backendImageName: 'azurecontainerregistryconnection.azurecr.io/backend'
+  frontendAppName: 'your-frontend-app-service'  # Replace with your Azure App Service name for frontend
+  backendAppName: 'your-backend-app-service'  # Replace with your Azure App Service name for backend
+
+steps:
+# Step 1: Checkout the code from the new repository
+- checkout: self
+  persistCredentials: true
+
+# Step 2: Log in to Azure Container Registry (ACR)
+- task: Docker@2
+  inputs:
+    command: login
+    containerRegistry: 'AzureDockerConnection'  # The name of your dockerregistry service connection
+
+# Step 3: Build and push the frontend Docker image
+- task: Docker@2
+  displayName: Build and Push Frontend Image
+  inputs:
+    command: buildAndPush
+    repository: $(frontendImageName)
+    dockerfile: ./frontend/Dockerfile
+    containerRegistry: 'AzureDockerConnection'
+    tags: |
+      latest
+      $(Build.BuildId)
+
+# Step 4: Build and push the backend Docker image
+- task: Docker@2
+  displayName: Build and Push Backend Image
+  inputs:
+    command: buildAndPush
+    repository: $(backendImageName)
+    dockerfile: ./backend/Dockerfile
+    containerRegistry: 'AzureDockerConnection'
+    tags: |
+      latest
+      $(Build.BuildId)
+
+# Step 5: Deploy the frontend service to Azure App Service
+- task: AzureWebAppContainer@1
+  displayName: Deploy Frontend to Azure App Service
+  inputs:
+    azureSubscription: $(azureSubscription)
+    appName: $(frontendAppName)
+    imageName: $(frontendImageName)
+    tag: 'latest'
+
+# Step 6: Deploy the backend service to Azure App Service
+- task: AzureWebAppContainer@1
+  displayName: Deploy Backend to Azure App Service
+  inputs:
+    azureSubscription: $(azureSubscription)
+    appName: $(backendAppName)
+    imageName: $(backendImageName)
+    tag: 'latest'
