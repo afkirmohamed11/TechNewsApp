@@ -3,33 +3,23 @@ import { api } from '../services/api';
 
 const translations = {
   en: {
-    latest: "Latest",
-    popular: "Popular",
     all: "All"
   },
   fr: {
-    latest: "Récent",
-    popular: "Populaire",
     all: "Tout"
   },
   es: {
-    latest: "Reciente",
-    popular: "Popular",
     all: "Todo"
   }
 };
 
 interface ArticleFiltersProps {
-  viewType: 'latest' | 'popular' | null;
-  setViewType: (type: 'latest' | 'popular' | null) => void;
   selectedCategory: string;
   onCategorySelect: (category: string) => void;
   language: string;
 }
 
 const ArticleFilters: React.FC<ArticleFiltersProps> = ({
-  viewType,
-  setViewType,
   selectedCategory,
   onCategorySelect,
   language
@@ -51,10 +41,6 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
     fetchCategories();
   }, []);
 
-  const handleViewTypeClick = (type: 'latest' | 'popular') => {
-    setViewType(viewType === type ? null : type);
-  };
-
   const getCategoryDisplayName = (category: string) => {
     return category === 'All' 
       ? translations[language as keyof typeof translations]?.all || translations.en.all
@@ -68,28 +54,6 @@ const ArticleFilters: React.FC<ArticleFiltersProps> = ({
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
             {getCategoryDisplayName(selectedCategory)}
           </h2>
-        </div>
-        <div className="flex gap-4">
-          <button
-            onClick={() => handleViewTypeClick('latest')}
-            className={`px-6 py-2.5 rounded-full text-base font-medium transition-all duration-200 ease-in-out transform hover:scale-105 ${
-              viewType === 'latest'
-                ? 'bg-blue-600 text-white shadow-lg hover:bg-blue-700'
-                : 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-            }`}
-          >
-            {translations[language as keyof typeof translations]?.latest || translations.en.latest}
-          </button>
-          <button
-            onClick={() => handleViewTypeClick('popular')}
-            className={`px-6 py-2.5 rounded-full text-base font-medium transition-all duration-200 ease-in-out transform hover:scale-105 ${
-              viewType === 'popular'
-                ? 'bg-blue-600 text-white shadow-lg hover:bg-blue-700'
-                : 'bg-gray-200 dark:bg-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-            }`}
-          >
-            {translations[language as keyof typeof translations]?.popular || translations.en.popular}
-          </button>
         </div>
       </div>
       <div className="flex flex-wrap gap-3 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl shadow-sm">

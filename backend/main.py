@@ -8,7 +8,6 @@ from crud import (
     get_all_TechArticles,
     get_TechArticle_by_title_and_description,
     get_TechArticles_by_category,
-    get_TechArticles_by_category_and_by_latest_or_popular,
     get_all_categories
 )
 from schemas import Article, ArticleDetail
@@ -55,11 +54,3 @@ def fetch_articles_by_category(category: str, db: Session = Depends(get_db)):
 @app.get("/articles/categories", response_model=list[str])
 def fetch_categories(db: Session = Depends(get_db)):
     return get_all_categories(db)
-
-# Get articles by category and by latest or popular
-@app.get("/articles/category-latest-popular", response_model=list[Article])
-def fetch_articles_by_latest_or_popular(category: str, latest_or_popular: bool, db: Session = Depends(get_db)):
-    articles = get_TechArticles_by_category_and_by_latest_or_popular(db, category, latest_or_popular)
-    if not articles:
-        raise HTTPException(status_code=404, detail="No articles found")
-    return articles

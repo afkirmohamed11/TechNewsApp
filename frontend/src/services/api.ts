@@ -30,23 +30,6 @@ const api = {
     }
   },
 
-  getArticlesByCategoryAndSort: async (category: string, latest: boolean): Promise<Article[]> => {
-    try {
-      console.log(`Fetching ${latest ? 'latest' : 'popular'} articles for category:`, category);
-      const response = await axios.get(`${API_BASE_URL}/articles/category-latest-popular`, {
-        params: { 
-          category,
-          latest_or_popular: latest
-        }
-      });
-      console.log('Sorted articles received:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching sorted articles:', error);
-      return [];
-    }
-  },
-
   getArticleDetail: async (title: string, description: string): Promise<ArticleDetail | null> => {
     try {
       const response = await axios.get(`${API_BASE_URL}/articles/detail`, {
