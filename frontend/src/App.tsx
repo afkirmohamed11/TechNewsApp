@@ -95,10 +95,16 @@ function App() {
             );
         }
       } else {
-        fetchedArticles = await api.getArticlesByCategoryAndSort(
-          selectedCategory,
-          viewType === 'latest'
-        );
+        if (viewType === null) {
+          // When no filter is selected, get all articles for the category
+          fetchedArticles = await api.getArticlesByCategory(selectedCategory);
+        } else {
+          // When a filter is selected, get filtered articles
+          fetchedArticles = await api.getArticlesByCategoryAndSort(
+            selectedCategory,
+            viewType === 'latest'
+          );
+        }
       }
       
       setArticles(fetchedArticles);
