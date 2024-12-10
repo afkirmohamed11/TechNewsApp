@@ -18,17 +18,12 @@ steps:
 - checkout: self
   persistCredentials: true
 
-# Step 2: Log in to Azure Container Registry (ACR) with secret variables
+# Step 2: Log in to Azure Container Registry (ACR) using service connection
 - task: Docker@2
   displayName: Login to Azure Container Registry
   inputs:
     command: login
-    azureSubscriptionEndpoint: $(azureSubscription)
-    azureContainerRegistry: 'AzureContainerRegistryConnection'  # Name of your ACR
-    containerRegistryType: 'ACR'
-    repository: 'your-app-name'
-    username: $(ACR_USERNAME)
-    password: $(ACR_PASSWORD)
+    containerRegistry: 'AzureDockerConnection'  # The name of your dockerregistry service connection
 
 # Step 3: Build and push the frontend Docker image
 - task: Docker@2
