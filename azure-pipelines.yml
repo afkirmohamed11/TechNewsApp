@@ -58,7 +58,7 @@ steps:
     appName: $(frontendAppName)
     imageName: $(frontendImageName)
     resourceGroupName: $(resourceGroupName)
-    slotName: 'production'  # Default slot, since free tier doesn't support slots
+    slotName: 'frontend-app-service'  # Default slot, since free tier doesn't support slots
 
 # Step 6: Deploy the backend service to Azure App Service
 - task: AzureWebAppContainer@1
@@ -68,4 +68,4 @@ steps:
     appName: $(backendAppName)
     imageName: $(backendImageName)
     resourceGroupName: $(resourceGroupName)
-    slotName: 'production'  # Default slot, since free tier doesn't support slots
+    slotName: 'frontend-app-service'  # Default slot, since free tier doesn't support slots
