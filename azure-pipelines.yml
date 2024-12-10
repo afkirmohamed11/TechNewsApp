@@ -24,7 +24,7 @@ steps:
   inputs:
     command: login
     azureSubscriptionEndpoint: $(azureSubscription)
-    azureContainerRegistry: 'AzureContainerRegistryConnection'
+    azureContainerRegistry: 'AzureContainerRegistryConnection'  # Name of your ACR
     containerRegistryType: 'ACR'
     repository: 'your-app-name'
     username: $(ACR_USERNAME)
