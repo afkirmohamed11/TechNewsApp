@@ -13,6 +13,7 @@ variables:
   frontendAppName: 'frontend-app-service'  # Replace with your Azure App Service name for frontend
   backendAppName: 'backend-app-service'  # Replace with your Azure App Service name for backend
 
+
 steps:
 # Step 1: Checkout the code from the new repository
 - checkout: self
