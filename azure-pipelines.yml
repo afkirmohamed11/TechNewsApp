@@ -12,6 +12,7 @@ variables:
   backendImageName: 'azurecontainerregistryconnection.azurecr.io/backend'
   frontendAppName: 'frontend-app-service'  # Your Azure App Service name for frontend
   backendAppName: 'backend-app-service'  # Your Azure App Service name for backend
+  resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
 
 steps:
 # Step 1: Checkout the code from the new repository
@@ -56,8 +57,8 @@ steps:
     azureSubscription: $(azureSubscription)
     appName: $(frontendAppName)
     imageName: $(frontendImageName)
-    resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
-    slot: 'fhckdydvg8efgvdu'  # Ensure this matches the slot name
+    resourceGroupName: $(resourceGroupName)
+    slotName: 'production'  # Default slot, since free tier doesn't support slots
 
 # Step 6: Deploy the backend service to Azure App Service
 - task: AzureWebAppContainer@1
@@ -66,5 +67,5 @@ steps:
     azureSubscription: $(azureSubscription)
     appName: $(backendAppName)
     imageName: $(backendImageName)
-    resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
-    slot: 'fhckdydvg8efgvdu'  # Ensure this matches the slot name
+    resourceGroupName: $(resourceGroupName)
+    slotName: 'production'  # Default slot, since free tier doesn't support slots
