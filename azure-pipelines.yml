@@ -13,17 +13,22 @@ variables:
   frontendAppName: 'frontend-app-service'  # Replace with your Azure App Service name for frontend
   backendAppName: 'backend-app-service'  # Replace with your Azure App Service name for backend
 
-
 steps:
 # Step 1: Checkout the code from the new repository
 - checkout: self
   persistCredentials: true
 
-# Step 2: Log in to Azure Container Registry (ACR)
+# Step 2: Log in to Azure Container Registry (ACR) with secret variables
 - task: Docker@2
+  displayName: Login to Azure Container Registry
   inputs:
     command: login
-    containerRegistry: 'AzureDockerConnection'  # The name of your dockerregistry service connection
+    azureSubscriptionEndpoint: $(azureSubscription)
+    azureContainerRegistry: 'AzureContainerRegistryConnection'
+    containerRegistryType: 'ACR'
+    repository: 'your-app-name'
+    username: $(ACR_USERNAME)
+    password: $(ACR_PASSWORD)
 
 # Step 3: Build and push the frontend Docker image
 - task: Docker@2
