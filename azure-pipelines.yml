@@ -56,6 +56,7 @@ steps:
     azureSubscription: $(azureSubscription)
     appName: $(frontendAppName)
     imageName: $(frontendImageName)
+    resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
     slot: 'fhckdydvg8efgvdu'  # Ensure this matches the slot name
 
 # Step 6: Deploy the backend service to Azure App Service
@@ -65,4 +66,5 @@ steps:
     azureSubscription: $(azureSubscription)
     appName: $(backendAppName)
     imageName: $(backendImageName)
+    resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
     slot: 'fhckdydvg8efgvdu'  # Ensure this matches the slot name
