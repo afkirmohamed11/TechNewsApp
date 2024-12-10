@@ -56,7 +56,7 @@ steps:
     azureSubscription: $(azureSubscription)
     appName: $(frontendAppName)
     imageName: $(frontendImageName)
-    tag: 'latest'
+    slot: 'fhckdydvg8efgvdu'  # Ensure this matches the slot name
 
 # Step 6: Deploy the backend service to Azure App Service
 - task: AzureWebAppContainer@1
@@ -65,4 +65,4 @@ steps:
     azureSubscription: $(azureSubscription)
     appName: $(backendAppName)
     imageName: $(backendImageName)
-    tag: 'latest'
+    slot: 'fhckdydvg8efgvdu'  # Ensure this matches the slot name
