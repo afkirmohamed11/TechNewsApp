@@ -7,22 +7,24 @@ pool:
     - agent.name -equals LOKMANE
 
 variables:
-  azureSubscription: 'AzureAppServiceConnection'  # Replace with your Azure service connection name
+  azureSubscription: 'Azureserviceconnection'  # Your Azure service connection name
   frontendImageName: 'azurecontainerregistryconnection.azurecr.io/frontend'
   backendImageName: 'azurecontainerregistryconnection.azurecr.io/backend'
-  frontendAppName: 'your-frontend-app-service'  # Replace with your Azure App Service name for frontend
-  backendAppName: 'your-backend-app-service'  # Replace with your Azure App Service name for backend
+  frontendAppName: 'frontend-app'  # Your Azure App Service name for frontend
+  backendAppName: 'backend-app'  # Your Azure App Service name for backend
+  resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
 
 steps:
 # Step 1: Checkout the code from the new repository
 - checkout: self
   persistCredentials: true
 
-# Step 2: Log in to Azure Container Registry (ACR)
+# Step 2: Log in to Azure Container Registry (ACR) using service connection
 - task: Docker@2
+  displayName: Login to Azure Container Registry
   inputs:
     command: login
-    containerRegistry: 'AzureDockerConnection'  # The name of your dockerregistry service connection
+    containerRegistry: 'AzureDockerConnection'  # The name of your docker registry service connection
 
 # Step 3: Build and push the frontend Docker image
 - task: Docker@2
@@ -53,15 +55,17 @@ steps:
   displayName: Deploy Frontend to Azure App Service
   inputs:
     azureSubscription: $(azureSubscription)
-    appName: $(frontendAppName)
+    appName: 'frontend-app'  # Exact name of your frontend app service
     imageName: $(frontendImageName)
-    tag: 'latest'
+    resourceGroupName: $(resourceGroupName)
+    slotName: 'production'  # Default slot, since free tier doesn't support slots
 
 # Step 6: Deploy the backend service to Azure App Service
 - task: AzureWebAppContainer@1
   displayName: Deploy Backend to Azure App Service
   inputs:
     azureSubscription: $(azureSubscription)
-    appName: $(backendAppName)
+    appName: 'backend-app'  # Exact name of your backend app service
     imageName: $(backendImageName)
-    tag: 'latest'
+    resourceGroupName: $(resourceGroupName)
+    slotName: 'production'  # Default slot, since free tier doesn't support slots
