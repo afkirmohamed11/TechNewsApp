@@ -55,7 +55,7 @@ steps:
   displayName: Deploy Frontend to Azure App Service
   inputs:
     azureSubscription: $(azureSubscription)
-    appName: 'frontend-app-service'  # Exact name of your frontend app service
+    appName: 'frontend-app'  # Exact name of your frontend app service
     imageName: $(frontendImageName)
     resourceGroupName: $(resourceGroupName)
     slotName: 'production'  # Default slot, since free tier doesn't support slots
@@ -65,7 +65,7 @@ steps:
   displayName: Deploy Backend to Azure App Service
   inputs:
     azureSubscription: $(azureSubscription)
-    appName: 'backend-app-service'  # Exact name of your backend app service
+    appName: 'backend-app'  # Exact name of your backend app service
     imageName: $(backendImageName)
     resourceGroupName: $(resourceGroupName)
     slotName: 'production'  # Default slot, since free tier doesn't support slots
