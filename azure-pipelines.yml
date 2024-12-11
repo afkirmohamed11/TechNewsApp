@@ -10,7 +10,7 @@ variables:
   azureSubscription: 'Azureserviceconnection'  # Your Azure service connection name
   frontendImageName: 'azurecontainerregistryconnection.azurecr.io/frontend'
   backendImageName: 'azurecontainerregistryconnection.azurecr.io/backend'
-  frontendAppName: 'frontend-app-service'  # Your Azure App Service name for frontend
+  frontendAppName: 'frontend-app'  # Your Azure App Service name for frontend
   backendAppName: 'backend-app'  # Your Azure App Service name for backend
   resourceGroupName: 'Scientific_articles'  # Correct casing for the resource group name
 
