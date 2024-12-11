@@ -24,7 +24,7 @@ steps:
   displayName: Login to Azure Container Registry
   inputs:
     command: login
-    containerRegistry: 'AzureDockerConnection'  # The name of your docker registry service connection
+    containerRegistry: 'AzureContainerRegistryConnection'  # The name of your docker registry service connection
 
 # Step 3: Build and push the frontend Docker image
 - task: Docker@2
@@ -33,7 +33,7 @@ steps:
     command: buildAndPush
     repository: $(frontendImageName)
     dockerfile: ./frontend/Dockerfile
-    containerRegistry: 'AzureDockerConnection'
+    containerRegistry: 'AzureContainerRegistryConnection'
     tags: |
       latest
       $(Build.BuildId)
@@ -45,7 +45,7 @@ steps:
     command: buildAndPush
     repository: $(backendImageName)
     dockerfile: ./backend/Dockerfile
-    containerRegistry: 'AzureDockerConnection'
+    containerRegistry: 'AzureContainerRegistryConnection'
     tags: |
       latest
       $(Build.BuildId)
