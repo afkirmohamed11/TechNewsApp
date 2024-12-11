@@ -9,7 +9,6 @@ A modern, full-stack web application for managing and displaying technical artic
 - **Dynamic Article Management**
   - Filter articles by categories
   - Detailed article view
-  - Real-time category filtering
 
 - **Modern UI/UX**
   - Responsive design
@@ -75,7 +74,8 @@ pip install -r requirements.txt
 #### Configure Database
 1. Create a MySQL database
 2. Update database configuration in `backend/database.py`
-3. Run SQL setup script:
+3. Update images path in SQL queries
+4. Run SQL setup script:
 ```bash
 mysql -u your_username -p your_database < backend/helpers/SQL.sql
 ```
